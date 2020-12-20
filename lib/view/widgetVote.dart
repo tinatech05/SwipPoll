@@ -6,6 +6,7 @@ import 'package:swipedetector/swipedetector.dart';
 import 'package:vote/Model/poll.dart';
 import 'package:vote/Service/dbservice.dart';
 import 'package:vote/view/AllpollsVote.dart';
+import 'package:vote/view/HomePage.dart';
 
 // ignore: must_be_immutable
 class WidgetVote extends StatefulWidget {
@@ -38,6 +39,7 @@ class WidgetVoteState extends State<WidgetVote> {
   String textUp, textDown;
   double initup = 0, initdown = 0;
   int creditUser, creditCreator;
+  int newcredit;
   users() async {
     final FirebaseUser user = await auth.currentUser();
     setState(() {
@@ -64,6 +66,7 @@ class WidgetVoteState extends State<WidgetVote> {
       existe = true;
     }
     print(userId);
+
     creditCreator = _myDoc2.documents[0].data['credit'];
     print(existe);
     print(creatorId);
@@ -162,137 +165,135 @@ class WidgetVoteState extends State<WidgetVote> {
           ((urlUp != null) && (urlDown != null))
               ? SwipeDetector(
                   onSwipeUp: () {
-                    if (creditUser == 0) {
+                    setState(() {
+                      picCont[0] = picCont[0] + 1;
+                    });
+                    if (existe == false) {
+                      db.updatePoll(
+                        id: something.id,
+                        vote: picCont,
+                      );
+                      if (votedfor == null) {
+                        votedfor = [something.id];
+                      } else {
+                        votedfor.add(something.id);
+                      }
+                      db.updateUser2(
+                          id: userId,
+                          credit: creditUser + 1,
+                          votedfor: votedfor);
+                      if (creditCreator > 0) {
+                        setState(() {
+                          newcredit = creditCreator - 1;
+                        });
+                      } else {
+                        setState(() {
+                          newcredit = creditCreator;
+                        });
+                      }
+                      db.updateUser(id: creatorId, credit: newcredit);
+                      setState(() {
+                        somethings.remove(somethings.first);
+                      });
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ALLPollVote(somethings)),
+                          ModalRoute.withName("/home"));
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text("Poll"),
-                            content: Text("you can't vote your credit is 0"),
+                            content: Text("UP :" +
+                                picCont[0].toString() +
+                                '     ' +
+                                "Down :" +
+                                picCont[1].toString()),
                           );
                         },
                       );
                     } else {
-                      setState(() {
-                        picCont[0] = picCont[0] + 1;
-                      });
-                      if (existe == false) {
-                        db.updatePoll(
-                          id: something.id,
-                          vote: picCont,
-                        );
-                        if (votedfor == null) {
-                          votedfor = [something.id];
-                        } else {
-                          votedfor.add(something.id);
-                        }
-                        db.updateUser2(
-                            id: userId,
-                            credit: creditUser + 1,
-                            votedfor: votedfor);
-                        db.updateUser(id: creatorId, credit: creditCreator - 1);
-                        setState(() {
-                          somethings.remove(somethings.first);
-                        });
-
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ALLPollVote(somethings)),
-                            ModalRoute.withName("/home"));
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Poll"),
-                              content: Text("UP :" +
-                                  picCont[0].toString() +
-                                  '     ' +
-                                  "Down :" +
-                                  picCont[1].toString()),
-                            );
-                          },
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Poll"),
-                              content: Text('You can vote only once'),
-                            );
-                          },
-                        );
-                      }
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeView()));
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Poll"),
+                            content: Text('The End'),
+                          );
+                        },
+                      );
                     }
                   },
                   onSwipeDown: () {
-                    if (creditUser == 0) {
+                    votedown++;
+                    setState(() {
+                      picCont[1] = picCont[1] + 1;
+                    });
+                    if (existe == false) {
+                      setState(() {
+                        existe = true;
+                      });
+                      db.updatePoll(
+                        id: something.id,
+                        vote: picCont,
+                      );
+                      if (votedfor == null) {
+                        votedfor = [something.id];
+                      } else {
+                        votedfor.add(something.id);
+                      }
+                      db.updateUser2(
+                          id: userId,
+                          credit: creditUser + 1,
+                          votedfor: votedfor);
+                      if (creditCreator > 0) {
+                        setState(() {
+                          newcredit = creditCreator - 1;
+                        });
+                      } else {
+                        setState(() {
+                          newcredit = creditCreator;
+                        });
+                      }
+                      db.updateUser(id: creatorId, credit: newcredit);
+                      setState(() {
+                        somethings.remove(somethings.first);
+                      });
+
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ALLPollVote(somethings)),
+                          ModalRoute.withName("/home"));
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text("Poll"),
-                            content: Text("you can't vote your credit is 0"),
+                            content: Text("UP :" +
+                                picCont[0].toString() +
+                                '     ' +
+                                "Down :" +
+                                picCont[1].toString()),
                           );
                         },
                       );
                     } else {
-                      votedown++;
-                      setState(() {
-                        picCont[1] = picCont[1] + 1;
-                      });
-                      if (existe == false) {
-                        setState(() {
-                          existe = true;
-                        });
-                        db.updatePoll(
-                          id: something.id,
-                          vote: picCont,
-                        );
-                        if (votedfor == null) {
-                          votedfor = [something.id];
-                        } else {
-                          votedfor.add(something.id);
-                        }
-                        db.updateUser2(
-                            id: userId,
-                            credit: creditUser + 1,
-                            votedfor: votedfor);
-                        db.updateUser(id: creatorId, credit: creditCreator - 1);
-                        setState(() {
-                          somethings.remove(somethings.first);
-                        });
-
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ALLPollVote(somethings)),
-                            ModalRoute.withName("/home"));
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Poll"),
-                              content: Text("UP :" +
-                                  picCont[0].toString() +
-                                  '     ' +
-                                  "Down :" +
-                                  picCont[1].toString()),
-                            );
-                          },
-                        );
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Poll"),
-                              content: Text('You can vote only once'),
-                            );
-                          },
-                        );
-                      }
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomeView()));
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Poll"),
+                            content: Text('The End'),
+                          );
+                        },
+                      );
                     }
                   },
                   child: Container(
@@ -331,138 +332,134 @@ class WidgetVoteState extends State<WidgetVote> {
             width: MediaQuery.of(context).size.width - 20,
             child: SwipeDetector(
               onSwipeUp: () {
-                if (creditUser == 0) {
+                setState(() {
+                  picCont[0] = picCont[0] + 1;
+                });
+                if (existe == false) {
+                  setState(() {
+                    existe = true;
+                  });
+                  db.updatePoll(
+                    id: something.id,
+                    vote: picCont,
+                  );
+                  if (votedfor == null) {
+                    votedfor = [something.id];
+                  } else {
+                    votedfor.add(something.id);
+                  }
+                  db.updateUser2(
+                      id: userId, credit: creditUser + 1, votedfor: votedfor);
+                  if (creditCreator > 0) {
+                    setState(() {
+                      newcredit = creditCreator - 1;
+                    });
+                  } else {
+                    setState(() {
+                      newcredit = creditCreator;
+                    });
+                  }
+                  db.updateUser(id: creatorId, credit: newcredit);
+                  setState(() {
+                    somethings.remove(somethings.first);
+                  });
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ALLPollVote(somethings)),
+                      ModalRoute.withName("/home"));
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text("Poll"),
-                        content:
-                            Text("you can't Upload a poll your credit is 0"),
+                        content: Text("UP :" +
+                            picCont[0].toString() +
+                            '     ' +
+                            "Down :" +
+                            picCont[1].toString()),
                       );
                     },
                   );
                 } else {
-                  setState(() {
-                    picCont[0] = picCont[0] + 1;
-                  });
-                  if (existe == false) {
-                    setState(() {
-                      existe = true;
-                    });
-                    db.updatePoll(
-                      id: something.id,
-                      vote: picCont,
-                    );
-                    if (votedfor == null) {
-                      votedfor = [something.id];
-                    } else {
-                      votedfor.add(something.id);
-                    }
-                    db.updateUser2(
-                        id: userId, credit: creditUser + 1, votedfor: votedfor);
-                    db.updateUser(id: creatorId, credit: creditCreator - 1);
-                    setState(() {
-                      somethings.remove(somethings.first);
-                    });
-
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ALLPollVote(somethings)),
-                        ModalRoute.withName("/home"));
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Poll"),
-                          content: Text("UP :" +
-                              picCont[0].toString() +
-                              '     ' +
-                              "Down :" +
-                              picCont[1].toString()),
-                        );
-                      },
-                    );
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Poll"),
-                          content: Text('You can vote only once'),
-                        );
-                      },
-                    );
-                  }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeView()));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Poll"),
+                        content: Text('The End'),
+                      );
+                    },
+                  );
                 }
               },
               onSwipeDown: () {
-                if (creditUser == 0) {
+                votedown++;
+                setState(() {
+                  picCont[1] = picCont[1] + 1;
+                });
+                if (existe == false) {
+                  setState(() {
+                    existe = true;
+                  });
+                  db.updatePoll(
+                    id: something.id,
+                    vote: picCont,
+                  );
+                  if (votedfor == null) {
+                    votedfor = [something.id];
+                  } else {
+                    votedfor.add(something.id);
+                  }
+                  db.updateUser2(
+                      id: userId, credit: creditUser + 1, votedfor: votedfor);
+                  if (creditCreator > 0) {
+                    setState(() {
+                      newcredit = creditCreator - 1;
+                    });
+                  } else {
+                    setState(() {
+                      newcredit = creditCreator;
+                    });
+                  }
+                  db.updateUser(id: creatorId, credit: newcredit);
+                  setState(() {
+                    somethings.remove(somethings.first);
+                  });
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ALLPollVote(somethings)),
+                      ModalRoute.withName("/home"));
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text("Poll"),
-                        content:
-                            Text("you can't Upload a poll your credit is 0"),
+                        content: Text("UP :" +
+                            picCont[0].toString() +
+                            '     ' +
+                            "Down :" +
+                            picCont[1].toString()),
                       );
                     },
                   );
                 } else {
-                  votedown++;
-                  setState(() {
-                    picCont[1] = picCont[1] + 1;
-                  });
-                  if (existe == false) {
-                    setState(() {
-                      existe = true;
-                    });
-                    db.updatePoll(
-                      id: something.id,
-                      vote: picCont,
-                    );
-                    if (votedfor == null) {
-                      votedfor = [something.id];
-                    } else {
-                      votedfor.add(something.id);
-                    }
-                    db.updateUser2(
-                        id: userId, credit: creditUser + 1, votedfor: votedfor);
-                    db.updateUser(id: creatorId, credit: creditCreator - 1);
-                    setState(() {
-                      somethings.remove(somethings.first);
-                    });
-
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ALLPollVote(somethings)),
-                        ModalRoute.withName("/home"));
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Poll"),
-                          content: Text("UP :" +
-                              picCont[0].toString() +
-                              '     ' +
-                              "Down :" +
-                              picCont[1].toString()),
-                        );
-                      },
-                    );
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Poll"),
-                          content: Text('You can vote only once'),
-                        );
-                      },
-                    );
-                  }
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeView()));
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text("Poll"),
+                        content: Text('The End'),
+                      );
+                    },
+                  );
                 }
               },
               child: Container(

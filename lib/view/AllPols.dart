@@ -56,21 +56,29 @@ class _AllPollState extends State<AllPoll> {
 
     QuerySnapshot _myDoc2 =
         await Firestore.instance.collection('poll').getDocuments();
+
     for (int i = 0; i < _myDoc2.documents.length; i++)
       if (_myDoc2.documents[i].data['creatorid'] != userId) {
-        if (!votedfor.contains(_myDoc2.documents[i].data['id'])) {
-          poll.add(Poll(
-            id: _myDoc2.documents[i].data['id'],
-            // vote: _myDoc2.documents[i].data['vote'],
-            urlpic: List<String>.from(_myDoc2.documents[i].data['urlpic']),
-            vote: List<double>.from(_myDoc2.documents[i].data['vote']),
-            type: _myDoc2.documents[i].data['type'],
-            creatorid: _myDoc2.documents[i].data['creatorid'],
-          ));
+        QuerySnapshot _myDoc3 = await Firestore.instance
+            .collection('users')
+            .where("id", isEqualTo: _myDoc2.documents[i].data['creatorid'])
+            .getDocuments();
+        if (_myDoc3.documents[0].data['credit'] != 0) {
+          if (votedfor.contains(_myDoc2.documents[i].data['id']) == false) {
+            poll.add(Poll(
+              id: _myDoc2.documents[i].data['id'],
+              // vote: _myDoc2.documents[i].data['vote'],
+              urlpic: List<String>.from(_myDoc2.documents[i].data['urlpic']),
+              vote: List<double>.from(_myDoc2.documents[i].data['vote']),
+              type: _myDoc2.documents[i].data['type'],
+              creatorid: _myDoc2.documents[i].data['creatorid'],
+            ));
+          }
         }
       }
     print(poll.length);
-      print(userId);
+    print(1);
+    print(userId);
     setState(() {
       poll = poll;
       vare = poll.length;
@@ -78,20 +86,14 @@ class _AllPollState extends State<AllPoll> {
     });
   }
 
-  PageController _controller = PageController(
-    initialPage: 0,
-  );
+  
   void initState() {
     super.initState();
-  
     credit();
+    prodlist2();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,11 +130,30 @@ class _AllPollState extends State<AllPoll> {
                             borderRadius: BorderRadiusDirectional.circular(30),
                           ),
                           onPressed: () {
-                              prodlist2();
+                            prodlist2();
+                            setState(() {
+                              vare = poll.length;
+                              print(vare);
+                            });
+                            //  if (vare != 0) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ALLPollVote(poll)));
+                            // }
+                            /*  if (vare == 0) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("report"),
+                                    content:
+                                        Text("You can't vote there is no vote"),
+                                  );
+                                },
+                              );
+                            },
+                        */
                           },
                           child: Text(
                             'Vote',

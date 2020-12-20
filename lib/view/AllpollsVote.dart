@@ -37,11 +37,7 @@ class ALLPollVoteState extends State<ALLPollVote> {
     print(vare);
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
