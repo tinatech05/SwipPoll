@@ -65,11 +65,9 @@ class WidgetVoteState extends State<WidgetVote> {
     if (votedfor.contains(something.id)) {
       existe = true;
     }
-    print(userId);
 
     creditCreator = _myDoc2.documents[0].data['credit'];
     print(existe);
-    print(creatorId);
     print('creditCreator');
     setState(() {
       votedfor = votedfor;

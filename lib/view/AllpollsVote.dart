@@ -48,8 +48,7 @@ class ALLPollVoteState extends State<ALLPollVote> {
           children: [
            
             if (vare != 0)
-              for (int i = 0; i < vare; i++)
-                WidgetVote(somethings[i], somethings),
+                WidgetVote(somethings.first, somethings),
                  if (vare == 0)
               AlertDialog(
                 title: Text("report"),
