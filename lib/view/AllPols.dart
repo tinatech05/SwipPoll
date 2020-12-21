@@ -58,7 +58,7 @@ class _AllPollState extends State<AllPoll> {
         await Firestore.instance.collection('poll').getDocuments();
 
     for (int i = 0; i < _myDoc2.documents.length; i++)
-      if (_myDoc2.documents[i].data['creatorid'] != userId) {
+     { if (_myDoc2.documents[i].data['creatorid'] != userId) {
         QuerySnapshot _myDoc3 = await Firestore.instance
             .collection('users')
             .where("id", isEqualTo: _myDoc2.documents[i].data['creatorid'])
@@ -75,10 +75,8 @@ class _AllPollState extends State<AllPoll> {
             ));
           }
         }
-      }
-    print(poll.length);
-    print(1);
-    print(userId);
+      }}
+    
     setState(() {
       poll = poll;
       vare = poll.length;

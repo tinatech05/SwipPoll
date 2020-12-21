@@ -46,14 +46,15 @@ class ALLPollVoteState extends State<ALLPollVote> {
           physics: NeverScrollableScrollPhysics(),
           controller: _controller,
           children: [
-            if (somethings.length == 0)
+           
+            if (vare != 0)
+              for (int i = 0; i < vare; i++)
+                WidgetVote(somethings[i], somethings),
+                 if (vare == 0)
               AlertDialog(
                 title: Text("report"),
                 content: Text("You can't vote there is no vote"),
               ),
-            if (vare != 0)
-              for (int i = 0; i < vare; i++)
-                WidgetVote(somethings[i], somethings),
           ],       
       ),
     );
