@@ -182,14 +182,14 @@ class WidgetVoteState extends State<WidgetVote> {
                           votedfor: votedfor);
                       if (creditCreator > 0) {
                         setState(() {
-                          newcredit = creditCreator - 1;
+                          creditCreator = creditCreator - 1;
                         });
                       } else {
                         setState(() {
-                          newcredit = creditCreator;
+                          creditCreator = creditCreator;
                         });
                       }
-                      db.updateUser(id: creatorId, credit: newcredit);
+                      db.updateUser(id: creatorId, credit: creditCreator);
                       setState(() {
                         somethings.remove(somethings.first);
                       });
@@ -250,14 +250,14 @@ class WidgetVoteState extends State<WidgetVote> {
                           votedfor: votedfor);
                       if (creditCreator > 0) {
                         setState(() {
-                          newcredit = creditCreator - 1;
+                          creditCreator = creditCreator - 1;
                         });
                       } else {
                         setState(() {
-                          newcredit = creditCreator;
+                          creditCreator = creditCreator;
                         });
                       }
-                      db.updateUser(id: creatorId, credit: newcredit);
+                      db.updateUser(id: creatorId, credit: creditCreator);
                       setState(() {
                         somethings.remove(somethings.first);
                       });
