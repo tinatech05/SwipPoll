@@ -13,7 +13,7 @@ class _SignUpState extends State<SignUp> {
   Db db = new Db();
   int credit = 10;
   String _name, _email, _password, _id;
-
+List<String> votedfor=[ ];
   checkAuthincation() async {
     _auth.onAuthStateChanged.listen((user) {
       if (user != null) {
@@ -56,7 +56,7 @@ class _SignUpState extends State<SignUp> {
           _email = _email;
         });
         db.addUser(context,
-            id: _id, username: _name, mail: _email, credit: credit);
+            id: _id, username: _name, mail: _email, credit: credit,votedfor:votedfor);
       } catch (e) {
         //  showError(e);
       }

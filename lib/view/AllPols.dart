@@ -52,8 +52,7 @@ class _AllPollState extends State<AllPoll> {
         .collection('users')
         .where("id", isEqualTo: userId)
         .getDocuments();
-    votedfor = List<String>.from(_myDoc1.documents[0].data['votedfor']);
-
+   votedfor = List<String>.from(_myDoc1.documents[0].data['votedfor']);
     QuerySnapshot _myDoc2 =
         await Firestore.instance.collection('poll').getDocuments();
 
@@ -63,7 +62,9 @@ class _AllPollState extends State<AllPoll> {
             .collection('users')
             .where("id", isEqualTo: _myDoc2.documents[i].data['creatorid'])
             .getDocuments();
-        if (_myDoc3.documents[0].data['credit'] != 0) {
+            print( _myDoc2.documents[i].data['creatorid']);
+            print(_myDoc3.documents[0].data['credit'].toString());
+        if (_myDoc3.documents[0].data['credit'] > 0) {
           if (votedfor.contains(_myDoc2.documents[i].data['id']) == false) {
             poll.add(Poll(
               id: _myDoc2.documents[i].data['id'],

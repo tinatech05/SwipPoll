@@ -34,7 +34,6 @@ class ALLPollVoteState extends State<ALLPollVote> {
   void initState() {
     super.initState();
     vare=somethings.length;
-    print(vare);
   }
 
   

@@ -38,13 +38,14 @@ class Db {
     String id,
     String username,
     int credit,
-    mail,
+    mail,votedfor
   }) async {
     createUser(User(
       id: id,
       username: username,
       mail: mail,
       credit: credit,
+      votedfor:votedfor,
     ));
     /*  Navigator.push(
         context, MaterialPageRoute(builder: (context) => HomeView()));*/
