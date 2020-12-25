@@ -67,8 +67,7 @@ class WidgetVoteState extends State<WidgetVote> {
     }
 
     creditCreator = _myDoc2.documents[0].data['credit'];
-    print(existe);
-    print('creditCreator');
+
     setState(() {
       votedfor = votedfor;
       existe = existe;
@@ -181,15 +180,12 @@ class WidgetVoteState extends State<WidgetVote> {
                           credit: creditUser + 1,
                           votedfor: votedfor);
                       if (creditCreator > 0) {
-                        setState(() {
-                          creditCreator = creditCreator - 1;
-                        });
-                      } else {
-                        setState(() {
-                          creditCreator = creditCreator;
-                        });
+                        db.updateUser(id: creatorId, credit: creditCreator - 1);
                       }
-                      db.updateUser(id: creatorId, credit: creditCreator);
+                      if (creditCreator == 0) {
+                        db.updateUser(id: creatorId, credit: creditCreator);
+                      }
+
                       setState(() {
                         somethings.remove(somethings.first);
                       });
@@ -249,15 +245,11 @@ class WidgetVoteState extends State<WidgetVote> {
                           credit: creditUser + 1,
                           votedfor: votedfor);
                       if (creditCreator > 0) {
-                        setState(() {
-                          creditCreator = creditCreator - 1;
-                        });
-                      } else {
-                        setState(() {
-                          creditCreator = creditCreator;
-                        });
+                        db.updateUser(id: creatorId, credit: creditCreator - 1);
                       }
-                      db.updateUser(id: creatorId, credit: creditCreator);
+                      if (creditCreator == 0) {
+                        db.updateUser(id: creatorId, credit: creditCreator);
+                      }
                       setState(() {
                         somethings.remove(somethings.first);
                       });
@@ -349,15 +341,11 @@ class WidgetVoteState extends State<WidgetVote> {
                   db.updateUser2(
                       id: userId, credit: creditUser + 1, votedfor: votedfor);
                   if (creditCreator > 0) {
-                    setState(() {
-                      newcredit = creditCreator - 1;
-                    });
-                  } else {
-                    setState(() {
-                      newcredit = creditCreator;
-                    });
+                    db.updateUser(id: creatorId, credit: creditCreator - 1);
                   }
-                  db.updateUser(id: creatorId, credit: newcredit);
+                  if (creditCreator == 0) {
+                    db.updateUser(id: creatorId, credit: creditCreator);
+                  }
                   setState(() {
                     somethings.remove(somethings.first);
                   });
@@ -415,15 +403,11 @@ class WidgetVoteState extends State<WidgetVote> {
                   db.updateUser2(
                       id: userId, credit: creditUser + 1, votedfor: votedfor);
                   if (creditCreator > 0) {
-                    setState(() {
-                      newcredit = creditCreator - 1;
-                    });
-                  } else {
-                    setState(() {
-                      newcredit = creditCreator;
-                    });
+                    db.updateUser(id: creatorId, credit: creditCreator - 1);
                   }
-                  db.updateUser(id: creatorId, credit: newcredit);
+                  if (creditCreator == 0) {
+                    db.updateUser(id: creatorId, credit: creditCreator);
+                  }
                   setState(() {
                     somethings.remove(somethings.first);
                   });
