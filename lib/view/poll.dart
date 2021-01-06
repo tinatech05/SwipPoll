@@ -85,35 +85,37 @@ class _AddPollState extends State<AddPoll> {
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1),
-                       Container(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: MediaQuery.of(context).size.width - 100,
-                            color: Colors.blue,
-                            padding: EdgeInsets.all(16),
-                            child:
-                      Row(
-                        children: [
-                          Padding(
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width - 100,
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          children: [
+                            Padding(
                               padding: const EdgeInsets.all(30.0),
                               child: Text(
                                 'Add a  Pic Poll',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-                          
-                                Material(
-                child: Icon(
-                  Icons.keyboard_arrow_up,
-                  size: 50.0,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                clipBehavior: Clip.hardEdge,
-              ),
-                        ],
-                      ),),
-
-                       SizedBox(
+                            Material(
+                              child: Icon(
+                                Icons.keyboard_arrow_up,
+                                size: 50.0,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
+                              clipBehavior: Clip.hardEdge,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       Container(
@@ -128,19 +130,22 @@ class _AddPollState extends State<AddPoll> {
                               child: Text(
                                 'Add a  Text Poll',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ),
-                              Material(
-                child: Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 50.0,
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                clipBehavior: Clip.hardEdge,
-              ),
-                        ],
-                          
+                            Material(
+                              child: Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 50.0,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)),
+                              clipBehavior: Clip.hardEdge,
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(

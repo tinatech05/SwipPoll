@@ -182,9 +182,9 @@ class WidgetVoteState extends State<WidgetVote> {
                       if (creditCreator > 0) {
                         db.updateUser(id: creatorId, credit: creditCreator - 1);
                       }
-                      if (creditCreator == 0) {
+                     /* if (creditCreator == 0) {
                         db.updateUser(id: creatorId, credit: creditCreator);
-                      }
+                      }*/
 
                       setState(() {
                         somethings.remove(somethings.first);
@@ -247,9 +247,9 @@ class WidgetVoteState extends State<WidgetVote> {
                       if (creditCreator > 0) {
                         db.updateUser(id: creatorId, credit: creditCreator - 1);
                       }
-                      if (creditCreator == 0) {
+                     /* if (creditCreator == 0) {
                         db.updateUser(id: creatorId, credit: creditCreator);
-                      }
+                      }*/
                       setState(() {
                         somethings.remove(somethings.first);
                       });
@@ -343,9 +343,9 @@ class WidgetVoteState extends State<WidgetVote> {
                   if (creditCreator > 0) {
                     db.updateUser(id: creatorId, credit: creditCreator - 1);
                   }
-                  if (creditCreator == 0) {
+                 /* if (creditCreator == 0) {
                     db.updateUser(id: creatorId, credit: creditCreator);
-                  }
+                  }*/
                   setState(() {
                     somethings.remove(somethings.first);
                   });
@@ -405,9 +405,9 @@ class WidgetVoteState extends State<WidgetVote> {
                   if (creditCreator > 0) {
                     db.updateUser(id: creatorId, credit: creditCreator - 1);
                   }
-                  if (creditCreator == 0) {
+               /*   if (creditCreator == 0) {
                     db.updateUser(id: creatorId, credit: creditCreator);
-                  }
+                  }*/
                   setState(() {
                     somethings.remove(somethings.first);
                   });

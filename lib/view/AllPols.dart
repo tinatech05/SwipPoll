@@ -52,18 +52,18 @@ class _AllPollState extends State<AllPoll> {
         .collection('users')
         .where("id", isEqualTo: userId)
         .getDocuments();
-   votedfor = List<String>.from(_myDoc1.documents[0].data['votedfor']);
+    votedfor = List<String>.from(_myDoc1.documents[0].data['votedfor']);
     QuerySnapshot _myDoc2 =
         await Firestore.instance.collection('poll').getDocuments();
 
-    for (int i = 0; i < _myDoc2.documents.length; i++)
-     { if (_myDoc2.documents[i].data['creatorid'] != userId) {
+    for (int i = 0; i < _myDoc2.documents.length; i++) {
+      if (_myDoc2.documents[i].data['creatorid'] != userId) {
         QuerySnapshot _myDoc3 = await Firestore.instance
             .collection('users')
             .where("id", isEqualTo: _myDoc2.documents[i].data['creatorid'])
             .getDocuments();
-            print( _myDoc2.documents[i].data['creatorid']);
-            print(_myDoc3.documents[0].data['credit'].toString());
+        print(_myDoc2.documents[i].data['creatorid']);
+        print(_myDoc3.documents[0].data['credit'].toString());
         if (_myDoc3.documents[0].data['credit'] > 0) {
           if (votedfor.contains(_myDoc2.documents[i].data['id']) == false) {
             poll.add(Poll(
@@ -76,8 +76,9 @@ class _AllPollState extends State<AllPoll> {
             ));
           }
         }
-      }}
-    
+      }
+    }
+
     setState(() {
       poll = poll;
       vare = poll.length;
@@ -85,14 +86,11 @@ class _AllPollState extends State<AllPoll> {
     });
   }
 
-  
   void initState() {
     super.initState();
     credit();
     prodlist2();
   }
-
-  
 
   Widget build(BuildContext context) {
     return Scaffold(

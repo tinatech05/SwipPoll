@@ -55,60 +55,11 @@ class _TextPollState extends State<TextPoll> {
 
   void initState() {
     super.initState();
-
     users();
     credit();
   }
 
-  Widget radio() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(
-                'Vote:',
-              ),
-            ),
-            Radio(
-              activeColor: Colors.black,
-              value: 1,
-              groupValue: ids,
-              onChanged: (val) {
-                setState(() {
-                  picCont = [1, 0];
-                  voteup = 1;
-                  radioButtonItem = 'Up';
-                  ids = 1;
-                });
-              },
-            ),
-            Text(
-              'Up',
-            ),
-            Radio(
-              activeColor: Colors.black,
-              value: 2,
-              groupValue: ids,
-              onChanged: (val) {
-                setState(() {
-                  picCont = [0, 1];
-                  votedown = 1;
-                  radioButtonItem = 'Down';
-                  ids = 2;
-                });
-              },
-            ),
-            Text(
-              'Down',
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+ 
 
   Widget build(BuildContext context) {
     return Scaffold(
